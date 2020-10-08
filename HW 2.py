@@ -4,10 +4,13 @@ import pandas as pd
 
 
 def web_Scraper(url, times, file_Name):
+    #create variables
     sel1 = 'body > ol > li'
     final_df = pd.DataFrame([])
     session = HTMLSession()
     try:
+        
+    #loop through website and aggregate company name & purpose data
         for i in range(times):
             r = session.get(url)
             mylist = []
@@ -16,6 +19,8 @@ def web_Scraper(url, times, file_Name):
                 mytext = result.text
                 mylist.append(mytext)
                 mydf = pd.DataFrame(mylist)
+                
+    #add scraped data to dataframe
             mydf.columns = ['text']
             Name = mydf[(mydf['text'].str.contains('Name'))]
             Purp = mydf[mydf['text'].str.contains('Purpose')]
